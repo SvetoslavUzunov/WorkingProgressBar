@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<style>
+    #myProgress {
+        width: 100%;
+        background-color: #ddd;
+    }
+
+    #myBar {
+        width: 0%;
+        height: 30px;
+        background-color: #04AA6D;
+    }
+
+    #displayPersentage {
+        text-align: center;
+    }
+
+    h1 {
+        text-align: center;
+    }
+</style>
+
+<body>
+    <h1>Working Progress Bar</h1>
+
+    <div id="myProgress">
+        <div id="myBar"></div>
+    </div>
+
+    <br>
+    <h1 id="displayPersentage">You have completed 0% of your working day!</h1>
+
+    <script>
+        var isStarted = false;
+        const countMilisecondsInHalfMinute = 1000;
+        const formulaFor9Hours = 0.0031;
+        const formulaFor8Hours = 0.105;
+        function move() {
+            if (!isStarted) {
+                isStarted = true;
+                var elem = document.getElementById("myBar");
+                let displayPersentage = document.getElementById('displayPersentage');
+                var width = 0;
+                setInterval(() => {
+                    if (width >= 100) {
+                        isStarted = false;
+                        displayPersentage.textContent = 'Done!'
+                    } else {
+                        width += formulaFor9Hours;
+                        elem.style.width = width + "%";
+                        displayPersentage.textContent = `You have completed ${width.toFixed(3)}% of your working day!`;
+                    }
+                }, countMilisecondsInHalfMinute);
+            }
+        }
+
+        let date = new Date();
+        let localTime = date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+        if (localTime[0] == '0') {
+            move();
+        }
+    </script>
+
+</body>
+
+</html>
